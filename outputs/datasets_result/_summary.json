@@ -1,0 +1,121 @@
+[
+  {
+    "file": "_13.pdf",
+    "status": "ok",
+    "wall_count": 8,
+    "room_count": 5,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "_15.pdf",
+    "status": "ok",
+    "wall_count": 13,
+    "room_count": 65,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A-190A.pdf",
+    "status": "ok",
+    "wall_count": 3,
+    "room_count": 32,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A-191.pdf",
+    "status": "ok",
+    "wall_count": 4,
+    "room_count": 42,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A-192.pdf",
+    "status": "ok",
+    "wall_count": 3,
+    "room_count": 29,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A-193.pdf",
+    "status": "ok",
+    "wall_count": 4,
+    "room_count": 23,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A-490.pdf",
+    "status": "ok",
+    "wall_count": 19,
+    "room_count": 35,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A-491.pdf",
+    "status": "ok",
+    "wall_count": 20,
+    "room_count": 29,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A-492.pdf",
+    "status": "ok",
+    "wall_count": 27,
+    "room_count": 46,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A-010.00 - DOOR SCHEDULE.pdf",
+    "status": "ok",
+    "wall_count": 1,
+    "room_count": 2,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A-014.00 - SECTION 504 UNIT DESIGNATIONS.pdf",
+    "status": "ok",
+    "wall_count": 1,
+    "room_count": 2,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A0.02-GENERAL-INFORMATION-Rev.2.pdf",
+    "status": "ok",
+    "wall_count": 7,
+    "room_count": 8,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A-102 .00 - 2ND  FLOOR PLAN.pdf",
+    "status": "ok",
+    "wall_count": 1,
+    "room_count": 2,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A-112 .00 - 12TH FLOOR PLAN.pdf",
+    "status": "ok",
+    "wall_count": 1,
+    "room_count": 2,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A0.54-FOURTH-FLOOR-REFERENCE-PLAN-Rev.1.pdf",
+    "status": "ok",
+    "wall_count": 7,
+    "room_count": 8,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A1.02A-SECOND-FLOOR-PLAN-PART-A-Rev.3.pdf",
+    "status": "ok",
+    "wall_count": 7,
+    "room_count": 8,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "A1.02B-SECOND-FLOOR-PLAN-PART-B-Rev.3.pdf",
+    "status": "ok",
+    "wall_count": 7,
+    "room_count": 8,
+    "message": "Room inference completed."
+  }
+]

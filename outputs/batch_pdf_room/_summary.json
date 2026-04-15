@@ -1,0 +1,79 @@
+[
+  {
+    "file": "back.pdf",
+    "status": "ok",
+    "wall_count": 1,
+    "room_count": 2,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "filesave.pdf",
+    "status": "ok",
+    "wall_count": 1,
+    "room_count": 2,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "forward.pdf",
+    "status": "ok",
+    "wall_count": 1,
+    "room_count": 2,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "hand.pdf",
+    "status": "ok",
+    "wall_count": 1,
+    "room_count": 2,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "help.pdf",
+    "status": "ok",
+    "wall_count": 2,
+    "room_count": 3,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "home.pdf",
+    "status": "ok",
+    "wall_count": 2,
+    "room_count": 3,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "matplotlib.pdf",
+    "status": "ok",
+    "wall_count": 1,
+    "room_count": 5,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "move.pdf",
+    "status": "ok",
+    "wall_count": 1,
+    "room_count": 2,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "qt4_editor_options.pdf",
+    "status": "ok",
+    "wall_count": 2,
+    "room_count": 4,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "subplots.pdf",
+    "status": "ok",
+    "wall_count": 6,
+    "room_count": 7,
+    "message": "Room inference completed."
+  },
+  {
+    "file": "zoom_to_rect.pdf",
+    "status": "ok",
+    "wall_count": 1,
+    "room_count": 2,
+    "message": "Room inference completed."
+  }
+]
