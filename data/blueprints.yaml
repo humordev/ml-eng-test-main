@@ -1,0 +1,8 @@
+path: data
+train: images/train
+val: images/val
+test: images/test
+
+# Single class baseline for this test.
+names:
+  0: wall
