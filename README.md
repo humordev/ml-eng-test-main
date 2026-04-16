@@ -18,7 +18,8 @@ This repository provides a baseline implementation for:
 The API is fully runnable and includes:
 - `type=wall`: returns detected wall contours and annotated image
 - `type=room`: returns room polygons from wall topology + annotated image
-- `type=page_info` and `type=tables`: placeholder behavior (returns wall output with message)
+- `type=tables`: returns detected table/grid regions and annotated image
+- `type=page_info`: returns page dimensions with wall context
 
 If `models/wall_detector.onnx` exists, that path is ready for integration.  
 If not, the project uses a CV heuristic baseline (threshold + morphology + contours), so you can run and demonstrate end-to-end immediately.

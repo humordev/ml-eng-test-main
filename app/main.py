@@ -10,9 +10,17 @@ from fastapi import FastAPI, File, HTTPException, Query, UploadFile
 from PIL import Image
 
 from app.inference import WallDetector, build_wall_mask
-from app.postprocess import detect_rooms_from_walls
+from app.postprocess import detect_rooms_from_walls, detect_tables_from_image
 from app.schemas import InferenceResponse, InferenceType
-from app.utils import draw_rooms, draw_walls, encode_image_base64, rooms_to_schema, walls_to_schema
+from app.utils import (
+    draw_rooms,
+    draw_tables,
+    draw_walls,
+    encode_image_base64,
+    rooms_to_schema,
+    tables_to_schema,
+    walls_to_schema,
+)
 
 app = FastAPI(title="Blueprint CV Inference API", version="0.1.0")
 
@@ -72,6 +80,7 @@ def run_inference(
         raise HTTPException(status_code=400, detail="Uploaded file must be an image or PDF.")
 
     bgr = _load_upload_to_bgr(image)
+    page_height, page_width = bgr.shape[:2]
     walls = wall_detector.predict_walls(bgr)
     wall_mask = build_wall_mask(bgr.shape[:2], walls, thickness=4)
 
@@ -81,6 +90,8 @@ def run_inference(
             type=type,
             annotated_image_base64=encode_image_base64(wall_image),
             wall_count=len(walls),
+            page_width=page_width,
+            page_height=page_height,
             walls=walls_to_schema(walls),
             message="Wall inference completed.",
         )
@@ -93,17 +104,37 @@ def run_inference(
             annotated_image_base64=encode_image_base64(room_image),
             wall_count=len(walls),
             room_count=len(rooms),
+            page_width=page_width,
+            page_height=page_height,
             walls=walls_to_schema(walls),
             rooms=rooms_to_schema(rooms),
             message="Room inference completed.",
         )
 
-    # Placeholders for additional tasks listed in the challenge.
-    passthrough = draw_walls(bgr, walls)
-    return InferenceResponse(
-        type=type,
-        annotated_image_base64=encode_image_base64(passthrough),
-        wall_count=len(walls),
-        walls=walls_to_schema(walls),
-        message=f"'{type}' is currently a placeholder that returns wall detections.",
-    )
+    if type == "tables":
+        tables = detect_tables_from_image(bgr)
+        table_image = draw_tables(bgr, tables)
+        return InferenceResponse(
+            type=type,
+            annotated_image_base64=encode_image_base64(table_image),
+            table_count=len(tables),
+            page_width=page_width,
+            page_height=page_height,
+            tables=tables_to_schema(tables),
+            message="Table inference completed.",
+        )
+
+    if type == "page_info":
+        # Return dimensions + lightweight wall context for page-level inspection.
+        page_image = draw_walls(bgr, walls)
+        return InferenceResponse(
+            type=type,
+            annotated_image_base64=encode_image_base64(page_image),
+            wall_count=len(walls),
+            page_width=page_width,
+            page_height=page_height,
+            walls=walls_to_schema(walls),
+            message="Page info inference completed with wall context.",
+        )
+
+    raise HTTPException(status_code=400, detail=f"Unsupported inference type: {type}")

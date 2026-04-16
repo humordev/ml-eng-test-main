@@ -7,8 +7,8 @@ import cv2
 import numpy as np
 
 from app.inference import WallPrediction
-from app.postprocess import RoomPrediction
-from app.schemas import Point, Polygon, RoomDetection, WallDetection
+from app.postprocess import RoomPrediction, TablePrediction
+from app.schemas import Point, Polygon, RoomDetection, TableDetection, WallDetection
 
 
 def contour_to_polygon(contour: np.ndarray) -> Polygon:
@@ -27,6 +27,13 @@ def rooms_to_schema(rooms: Iterable[RoomPrediction]) -> List[RoomDetection]:
     return [
         RoomDetection(room_id=r.room_id, area_px=int(r.area_px), polygon=contour_to_polygon(r.contour))
         for r in rooms
+    ]
+
+
+def tables_to_schema(tables: Iterable[TablePrediction]) -> List[TableDetection]:
+    return [
+        TableDetection(confidence=float(t.confidence), polygon=contour_to_polygon(t.contour))
+        for t in tables
     ]
 
 
@@ -71,4 +78,11 @@ def draw_rooms(image_bgr: np.ndarray, rooms: Iterable[RoomPrediction]) -> np.nda
             )
 
     cv2.addWeighted(overlay, 0.35, out, 0.65, 0, out)
+    return out
+
+
+def draw_tables(image_bgr: np.ndarray, tables: Iterable[TablePrediction]) -> np.ndarray:
+    out = image_bgr.copy()
+    for table in tables:
+        cv2.drawContours(out, [table.contour], -1, (255, 0, 0), 2)
     return out

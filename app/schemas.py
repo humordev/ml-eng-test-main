@@ -26,11 +26,20 @@ class RoomDetection(BaseModel):
     polygon: Polygon
 
 
+class TableDetection(BaseModel):
+    confidence: float = Field(ge=0.0, le=1.0)
+    polygon: Polygon
+
+
 class InferenceResponse(BaseModel):
     type: InferenceType
     annotated_image_base64: str
     wall_count: int = 0
     room_count: int = 0
+    table_count: int = 0
+    page_width: Optional[int] = None
+    page_height: Optional[int] = None
     walls: Optional[List[WallDetection]] = None
     rooms: Optional[List[RoomDetection]] = None
+    tables: Optional[List[TableDetection]] = None
     message: Optional[str] = None

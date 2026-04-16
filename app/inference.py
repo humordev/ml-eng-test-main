@@ -92,16 +92,30 @@ class WallDetector:
     def _predict_with_cv_heuristic(self, bgr_image: np.ndarray) -> List[WallPrediction]:
         gray = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2GRAY)
         blur = cv2.GaussianBlur(gray, (3, 3), 0)
-        _, binary_inv = cv2.threshold(blur, 180, 255, cv2.THRESH_BINARY_INV)
+        binary_inv = cv2.adaptiveThreshold(
+            blur,
+            255,
+            cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+            cv2.THRESH_BINARY_INV,
+            31,
+            8,
+        )
 
         # Emphasize blueprint linear structures
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
         closed = cv2.morphologyEx(binary_inv, cv2.MORPH_CLOSE, kernel, iterations=2)
         dilated = cv2.dilate(closed, kernel, iterations=1)
 
-        contours, _ = cv2.findContours(dilated, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
+        # Strengthen horizontal/vertical wall segments.
         h, w = gray.shape
+        h_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (max(15, w // 80), 1))
+        v_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (1, max(15, h // 80)))
+        horizontal = cv2.morphologyEx(dilated, cv2.MORPH_OPEN, h_kernel, iterations=1)
+        vertical = cv2.morphologyEx(dilated, cv2.MORPH_OPEN, v_kernel, iterations=1)
+        wall_like = cv2.bitwise_or(dilated, cv2.bitwise_or(horizontal, vertical))
+
+        contours, _ = cv2.findContours(wall_like, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
         min_area = max(100, int((h * w) * 0.0002))
         predictions: List[WallPrediction] = []
 
@@ -113,7 +127,8 @@ class WallDetector:
             # Keep long-ish, wall-like components.
             x, y, bw, bh = cv2.boundingRect(contour)
             aspect_ratio = max(bw / max(1, bh), bh / max(1, bw))
-            if aspect_ratio < 1.2 and area < min_area * 2:
+            fill_ratio = area / max(1.0, float(bw * bh))
+            if aspect_ratio < 1.15 and fill_ratio > 0.75:
                 continue
 
             approx = cv2.approxPolyDP(contour, epsilon=2.0, closed=True)
